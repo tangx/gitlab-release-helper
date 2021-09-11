@@ -60,7 +60,7 @@ func (s *Server) assertLinks(folders ...string) []*gitlab.ReleaseAssetLink {
 			filename := entry.Name()
 			filePath := filepath.Join(folder, filename)
 			fileUrlPostfix := s.fileUrl(filename)
-			fileReleaseUrl := filepath.Join(s.ReleasePrefix, fileUrlPostfix)
+			fileReleaseUrl := filepath.Join(s.HostPrefix, fileUrlPostfix)
 
 			// todo: use minio-go upload
 			if s3upload(filename, filePath, fileUrlPostfix, fileReleaseUrl) {

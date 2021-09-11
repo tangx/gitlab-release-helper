@@ -9,9 +9,9 @@ import (
 )
 
 type Server struct {
-	ReleasePrefix string `env:""`
-	envMap        map[string]string
-	gitlab        *gitlab.Client
+	HostPrefix string `env:""`
+	envMap     map[string]string
+	gitlab     *gitlab.Client
 }
 
 func (s *Server) SetDefaults() {

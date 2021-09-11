@@ -1,13 +1,29 @@
 package global
 
-import "github.com/tangx/gitlab-release-helper/pkg/confgitlab"
+import (
+	"github.com/go-jarvis/jarvis"
+	"github.com/tangx/confs3"
+	"github.com/tangx/gitlab-release-helper/pkg/confgitlab"
+)
 
 var (
-	GitlabHelper = confgitlab.Server{
-		ReleasePrefix: "https://git-dl.example.com/xxxx",
+	GitlabHelper = &confgitlab.Server{}
+
+	S3Client = &confs3.S3Client{}
+
+	app = jarvis.App{
+		Name: "Releaser",
 	}
 )
 
 func init() {
-	GitlabHelper.Init()
+	config := &struct {
+		GitlabHelper *confgitlab.Server
+		S3Client     *confs3.S3Client
+	}{
+		GitlabHelper: GitlabHelper,
+		S3Client:     S3Client,
+	}
+
+	app.Conf(config)
 }
