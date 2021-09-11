@@ -28,7 +28,7 @@ func (s *Server) createRelease(pid string, opts *gitlab.CreateReleaseOptions) (*
 	return rel, err
 }
 
-func (s *Server) fileUrl(filename string) string {
+func (s *Server) FileUrl(filename string) string {
 	// https://github.com/tangx/dnsx/releases/download/v1.0.3/dnsx_v1.0.3_Darwin_x86_64
 	// https://git.example.com/releases/download/:group/:project_name/:tag/:filename
 
@@ -59,7 +59,7 @@ func (s *Server) assertLinks(folders ...string) []*gitlab.ReleaseAssetLink {
 			}
 			filename := entry.Name()
 			filePath := filepath.Join(folder, filename)
-			fileUrlPostfix := s.fileUrl(filename)
+			fileUrlPostfix := s.FileUrl(filename)
 			fileReleaseUrl := filepath.Join(s.HostPrefix, fileUrlPostfix)
 
 			// todo: use minio-go upload

@@ -8,10 +8,8 @@ import (
 
 var (
 	GitlabHelper = &confgitlab.Server{}
-
-	S3Client = &confs3.S3Client{}
-
-	app = jarvis.App{
+	S3Client     = &confs3.S3Client{}
+	app          = jarvis.App{
 		Name: "Releaser",
 	}
 )
