@@ -5,7 +5,7 @@ go 1.17
 require (
 	github.com/go-jarvis/jarvis v0.1.2
 	github.com/spf13/cobra v1.2.1
-	github.com/tangx/confs3 v0.2.1
+	github.com/tangx/confs3 v0.2.2
 	github.com/xanzy/go-gitlab v0.50.4
 )
 

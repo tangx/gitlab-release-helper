@@ -5,7 +5,6 @@ import (
 )
 
 func main() {
-	// global.Init()
 
 	cmd.Execute()
 }
