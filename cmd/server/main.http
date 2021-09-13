@@ -1,0 +1,3 @@
+
+### GET object
+GET http://127.0.0.1:8088/app/v0/object/tools/qingclix/qingclix-darwin-amd64

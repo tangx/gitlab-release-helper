@@ -34,7 +34,7 @@ func (s *Server) Run() error {
 	return s.engine.Run(addr)
 }
 
-func (s *Server) AppendRoutes(fn func(rg *gin.RouterGroup)) {
+func (s *Server) RegisterRoutes(fn func(rg *gin.RouterGroup)) {
 	base := s.engine.Group(s.appname)
 	fn(base)
 }
