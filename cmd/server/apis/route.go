@@ -6,6 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/tangx/ginbinder"
 	"github.com/tangx/gitlab-release-helper/cmd/server/global"
+	"github.com/tangx/gitlab-release-helper/pkg/confgin/response"
 )
 
 func BaseRoute(base *gin.RouterGroup) {
@@ -26,7 +27,7 @@ func getHandler(c *gin.Context) {
 
 	err := ginbinder.ShouldBindRequest(c, params)
 	if err != nil {
-		c.String(http.StatusBadRequest, "bind params failed: %v", err)
+		response.Error(c, http.StatusBadRequest, err)
 		return
 	}
 
@@ -36,7 +37,8 @@ func getHandler(c *gin.Context) {
 		return
 	}
 
-	c.String(http.StatusFound, u.String())
+	// c.String(http.StatusFound, u.String())
+	response.Common(c, http.StatusFound, u.String())
 }
 
 func putHandler(c *gin.Context) {
