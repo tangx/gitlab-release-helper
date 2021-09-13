@@ -14,19 +14,10 @@ var githelper = global.GitlabHelper
 
 func CreateRelease(folders ...string) {
 	links := upload(folders...)
-	tag, err := githelper.CreateRelease()
+	_, err := githelper.CreateRelease(links...)
 	if err != nil {
 		log.Fatalf("Create Release failed: %v\n", err)
 	}
-
-	for _, link := range links {
-		err := githelper.CreateReleaseLink(tag, link)
-		if err != nil {
-			log.Fatalf("create release link failed: %v\n", link)
-		}
-		log.Printf("create release link success: %v\n", link)
-	}
-
 }
 
 func upload(folders ...string) []confgitlab.AssertLink {

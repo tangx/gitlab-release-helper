@@ -21,10 +21,12 @@ func (s *Server) SetDefaults() {
 func (s *Server) Init() {
 	s.SetDefaults()
 
-	git, err := gitlab.NewClient(
-		s.env("CI_REGISTRY_PASSWORD"),
+	// https://docs.gitlab.com/ee/ci/jobs/ci_job_token.html
+	git, err := gitlab.NewJobClient(
+		s.env("CI_JOB_TOKEN"),
 		gitlab.WithBaseURL(s.env("CI_API_V4_URL")),
 	)
+
 	if err != nil {
 		log.Fatalf("gitlab initial client failed: %v", err)
 	}

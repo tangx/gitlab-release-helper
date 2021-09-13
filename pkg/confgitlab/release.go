@@ -6,14 +6,26 @@ import (
 	"github.com/xanzy/go-gitlab"
 )
 
-func (s *Server) CreateRelease(folders ...string) (string, error) {
-	// links := s.assertLinks(folders...)
+func (s *Server) CreateRelease(links ...AssertLink) (string, error) {
+	// CI_JOB_TOKEN 只能创建 release, 可以携带 link
+	// 不能单独创建 link
+	releaseLinks := []*gitlab.ReleaseAssetLink{}
+	for _, link := range links {
+		releaseLinks = append(releaseLinks, &gitlab.ReleaseAssetLink{
+			Name: link.Name,
+			URL:  link.URL,
+		})
+	}
+
 	pid := s.env("CI_PROJECT_ID")
 	ref := s.env("CI_COMMIT_REF_NAME")
 	opts := &gitlab.CreateReleaseOptions{
 		Name:    &ref,
 		TagName: &ref,
 		Ref:     &ref,
+		Assets: &gitlab.ReleaseAssets{
+			Links: releaseLinks,
+		},
 	}
 
 	release, _, err := s.gitlab.Releases.CreateRelease(pid, opts)
@@ -22,7 +34,6 @@ func (s *Server) CreateRelease(folders ...string) (string, error) {
 	}
 
 	return release.TagName, nil
-
 }
 
 func (s *Server) ReleaseName(filename string) string {
