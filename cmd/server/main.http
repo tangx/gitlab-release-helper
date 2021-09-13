@@ -1,12 +1,12 @@
 
 ### GET object
-GET http://127.0.0.1:8088/app/v0/object/tools/qingclix/qingclix-darwin-amd64
+GET http://127.0.0.1:8088/app/v0/object/tmp/main.http
 
 
 ### Post file
-PUT http://127.0.0.1:8088/app/v0/object/tmp/main.http
+PUT http://127.0.0.1:8088/app/v0/object/tmp/main.go
 
-< ./config/default.yml
+< ./main.go
 
 ### POST2 file
 PUT https://cos.ap-chengdu.myqcloud.com/ops-software-binary-1255440668//tmp/main.go?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIDxf7uRhZX4LK2A1LwzDBsIRJwHMnycXuV%2F20210913%2Fap-chengdu%2Fs3%2Faws4_request&X-Amz-Date=20210913T154952Z&X-Amz-Expires=300&X-Amz-SignedHeaders=host&X-Amz-Signature=a9c597e58a7dd6d7f08a2de7543f1240edb258f47c556befde35ed4b93ad1e19

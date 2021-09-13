@@ -36,9 +36,9 @@ func getHandler(c *gin.Context) {
 		c.String(http.StatusInternalServerError, "internal error: %v", err)
 		return
 	}
-
-	// c.String(http.StatusFound, u.String())
-	response.Common(c, http.StatusFound, u.String())
+	// c.Writer.Header().Set("Location", u.String())
+	// c.String(http.StatusTemporaryRedirect, u.String())
+	c.Redirect(http.StatusFound, u.String())
 }
 
 func putHandler(c *gin.Context) {
@@ -56,5 +56,5 @@ func putHandler(c *gin.Context) {
 		return
 	}
 
-	c.String(http.StatusTemporaryRedirect, u.String())
+	c.Redirect(http.StatusTemporaryRedirect, u.String())
 }
