@@ -5,6 +5,7 @@ go 1.17
 require (
 	github.com/gin-gonic/gin v1.7.4
 	github.com/go-jarvis/jarvis v0.1.2
+	github.com/sirupsen/logrus v1.8.1
 	github.com/spf13/cobra v1.2.1
 	github.com/tangx/confs3 v0.2.2
 	github.com/tangx/ginbinder v0.1.1
@@ -35,7 +36,6 @@ require (
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.2 // indirect
 	github.com/rs/xid v1.3.0 // indirect
-	github.com/sirupsen/logrus v1.8.1 // indirect
 	github.com/smartystreets/assertions v1.0.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/tangx/envutils v0.2.1 // indirect

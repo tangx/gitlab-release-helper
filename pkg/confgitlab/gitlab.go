@@ -9,19 +9,10 @@ import (
 )
 
 type Server struct {
-	HostPrefix string `env:""`
-	envMap     map[string]string
-	gitlab     *gitlab.Client
-}
-
-func (s *Server) SetDefaults() {
-	// s.loadEnv()
+	gitlab *gitlab.Client
 }
 
 func (s *Server) Init() {
-	s.SetDefaults()
-
-	// https://docs.gitlab.com/ee/ci/jobs/ci_job_token.html
 
 	git, err := s.gitlabClient()
 	if err != nil {
@@ -32,6 +23,7 @@ func (s *Server) Init() {
 }
 
 func (s *Server) gitlabClient() (*gitlab.Client, error) {
+	// https://docs.gitlab.com/ee/ci/jobs/ci_job_token.html
 	if s.env("CI_JOB_TOKEN") != "" {
 		return gitlab.NewJobClient(
 			s.env("CI_JOB_TOKEN"),
@@ -51,14 +43,3 @@ func (s *Server) gitlabClient() (*gitlab.Client, error) {
 func (s *Server) env(key string) string {
 	return os.Getenv(key)
 }
-
-// func (s *Server) loadEnv() {
-// 	if s.envMap == nil {
-// 		s.envMap = make(map[string]string)
-// 	}
-// 	for _, env := range os.Environ() {
-// 		kv := strings.Split(env, "=")
-// 		k, v := kv[0], kv[1:]
-// 		s.envMap[k] = strings.Join(v, "=")
-// 	}
-// }

@@ -1,6 +1,8 @@
 package main
 
 import (
+	"os"
+
 	"github.com/sirupsen/logrus"
 	"github.com/tangx/gitlab-release-helper/cmd/releaser/cmd"
 )
@@ -11,6 +13,8 @@ func main() {
 }
 
 func init() {
-	logrus.SetReportCaller(true)
-	logrus.SetLevel(logrus.DebugLevel)
+	if os.Getenv("DEBUG") != "" {
+		logrus.SetReportCaller(true)
+		logrus.SetLevel(logrus.DebugLevel)
+	}
 }
