@@ -2,6 +2,7 @@ package apis
 
 import (
 	"net/http"
+	"path"
 
 	"github.com/gin-gonic/gin"
 	"github.com/tangx/ginbinder"
@@ -36,8 +37,7 @@ func getHandler(c *gin.Context) {
 		c.String(http.StatusInternalServerError, "internal error: %v", err)
 		return
 	}
-	// c.Writer.Header().Set("Location", u.String())
-	// c.String(http.StatusTemporaryRedirect, u.String())
+
 	c.Redirect(http.StatusFound, u.String())
 }
 
@@ -55,6 +55,9 @@ func putHandler(c *gin.Context) {
 		c.String(http.StatusInternalServerError, "internal error: %v", err)
 		return
 	}
+
+	permanentLink := path.Join(c.Request.Host, params.Object)
+	c.String(http.StatusTemporaryRedirect, permanentLink)
 
 	c.Redirect(http.StatusTemporaryRedirect, u.String())
 }

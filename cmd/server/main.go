@@ -6,6 +6,9 @@ import (
 )
 
 func main() {
-	global.Server.RegisterRoutes(apis.BaseRoute)
 	global.Server.Run()
+}
+
+func init() {
+	global.Server.RegisterRoutes(apis.BaseRoute)
 }
