@@ -8,3 +8,8 @@ func main() {
 
 	cmd.Execute()
 }
+
+func init() {
+	// logrus.SetReportCaller(true)
+	// logrus.SetLevel(logrus.DebugLevel)
+}
