@@ -1,7 +1,9 @@
 package apis
 
 import (
+	"fmt"
 	"net/http"
+	"path/filepath"
 	"strings"
 
 	"github.com/gin-gonic/gin"
@@ -28,14 +30,15 @@ func getHandler(c *gin.Context) {
 
 	err := ginbinder.ShouldBindRequest(c, params)
 	if err != nil {
-		response.Error(c, http.StatusBadRequest, err)
+		response.Error(c, http.StatusBadRequest, err.Error())
 		return
 	}
 
 	_object := strings.Trim(params.Object, "/")
 	u, err := global.S3.PreSignedGetURL(_object)
 	if err != nil {
-		c.String(http.StatusInternalServerError, "internal error: %v", err)
+		// c.String(http.StatusInternalServerError, "internal error: %v", err)
+		response.Common(c, http.StatusInternalServerError, err.Error())
 		return
 	}
 
@@ -47,14 +50,15 @@ func putHandler(c *gin.Context) {
 
 	err := ginbinder.ShouldBindRequest(c, params)
 	if err != nil {
-		c.String(http.StatusBadRequest, "bind params failed: %v", err)
+		response.Error(c, http.StatusBadRequest, err.Error())
 		return
 	}
 
 	_object := strings.Trim(params.Object, "/")
 	u, err := global.S3.PreSignedPutURL(_object, false)
 	if err != nil {
-		c.String(http.StatusInternalServerError, "internal error: %v", err)
+		msg := fmt.Sprintf("internal error: %v", err)
+		response.Error(c, http.StatusInternalServerError, msg)
 		return
 	}
 
@@ -63,5 +67,17 @@ func putHandler(c *gin.Context) {
 	// 应该拆分为两步
 	// 1. c -> server : 请求一个 presign url
 	// 2. c -> s3 : put upload 文件
-	c.Redirect(http.StatusTemporaryRedirect, u.String())
+	// c.Redirect(http.StatusTemporaryRedirect, u.String())
+	// c.String(http.StatusOK, u.String())
+
+	data := Data{
+		PermanentiLink:    filepath.Join(c.Request.Host, _object),
+		TemporaryRedirect: u.String(),
+	}
+	response.Common(c, http.StatusOK, data)
+}
+
+type Data struct {
+	PermanentiLink    string
+	TemporaryRedirect string
 }

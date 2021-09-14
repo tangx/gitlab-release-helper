@@ -1,6 +1,8 @@
 package response
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/gin-gonic/gin"
+)
 
 func Common(c *gin.Context, status int, data interface{}) {
 	resp := Response{
@@ -11,7 +13,7 @@ func Common(c *gin.Context, status int, data interface{}) {
 	c.JSON(status, resp)
 }
 
-func Error(c *gin.Context, status int, err error) {
+func Error(c *gin.Context, status int, err string) {
 	resp := Response{
 		Status: status,
 		Error:  err,
@@ -23,5 +25,5 @@ func Error(c *gin.Context, status int, err error) {
 type Response struct {
 	Status int
 	Data   interface{}
-	Error  error
+	Error  string
 }
