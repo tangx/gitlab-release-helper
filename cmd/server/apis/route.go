@@ -2,7 +2,7 @@ package apis
 
 import (
 	"net/http"
-	"path"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 	"github.com/tangx/ginbinder"
@@ -32,7 +32,8 @@ func getHandler(c *gin.Context) {
 		return
 	}
 
-	u, err := global.S3.PreSignedGetURL(params.Object)
+	_object := strings.Trim(params.Object, "/")
+	u, err := global.S3.PreSignedGetURL(_object)
 	if err != nil {
 		c.String(http.StatusInternalServerError, "internal error: %v", err)
 		return
@@ -50,14 +51,17 @@ func putHandler(c *gin.Context) {
 		return
 	}
 
-	u, err := global.S3.PreSignedPutURL(params.Object, false)
+	_object := strings.Trim(params.Object, "/")
+	u, err := global.S3.PreSignedPutURL(_object, false)
 	if err != nil {
 		c.String(http.StatusInternalServerError, "internal error: %v", err)
 		return
 	}
 
-	permanentLink := path.Join(c.Request.Host, params.Object)
-	c.String(http.StatusTemporaryRedirect, permanentLink)
-
+	// 这里其实不应该直接使用 c.Redirect
+	// client 会把 body 发过来， 是一种浪费。
+	// 应该拆分为两步
+	// 1. c -> server : 请求一个 presign url
+	// 2. c -> s3 : put upload 文件
 	c.Redirect(http.StatusTemporaryRedirect, u.String())
 }
