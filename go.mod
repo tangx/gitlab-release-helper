@@ -4,7 +4,7 @@ go 1.17
 
 require (
 	github.com/gin-gonic/gin v1.7.4
-	github.com/go-jarvis/jarvis v0.1.2
+	github.com/go-jarvis/jarvis v0.1.3
 	github.com/sirupsen/logrus v1.8.1
 	github.com/spf13/cobra v1.2.1
 	github.com/tangx/confs3 v0.2.2
@@ -38,7 +38,7 @@ require (
 	github.com/rs/xid v1.3.0 // indirect
 	github.com/smartystreets/assertions v1.0.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
-	github.com/tangx/envutils v0.2.1 // indirect
+	github.com/tangx/envutils v0.3.1 // indirect
 	github.com/ugorji/go/codec v1.2.6 // indirect
 	golang.org/x/crypto v0.0.0-20210711020723-a769d52b0f97 // indirect
 	golang.org/x/net v0.0.0-20210510120150-4163338589ed // indirect
