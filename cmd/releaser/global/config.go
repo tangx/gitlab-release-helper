@@ -8,7 +8,6 @@ import (
 
 var (
 	GitlabHelper = &confgitlab.Server{}
-	S3Client     = &confs3.S3Client{}
 	app          = jarvis.App{
 		Name: "Releaser",
 	}
@@ -20,7 +19,6 @@ func init() {
 		S3Client     *confs3.S3Client
 	}{
 		GitlabHelper: GitlabHelper,
-		S3Client:     S3Client,
 	}
 
 	app.Conf(config)

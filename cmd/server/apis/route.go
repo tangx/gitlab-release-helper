@@ -18,7 +18,7 @@ func BaseRoute(base *gin.RouterGroup) {
 	objectRoute := v0Route.Group("/object")
 
 	objectRoute.GET("/*object", getHandler)
-	objectRoute.PUT("/*object", putHandler)
+	objectRoute.POST("/*object", putHandler)
 }
 
 type Params struct {
@@ -68,8 +68,6 @@ func putHandler(c *gin.Context) {
 	// 1. c -> server : 请求一个 presign url
 	// 2. c -> s3 : put upload 文件
 	// c.Redirect(http.StatusTemporaryRedirect, u.String())
-	// c.String(http.StatusOK, u.String())
-
 	data := Data{
 		PermanentiLink:    filepath.Join(c.Request.Host, _object),
 		TemporaryRedirect: u.String(),
