@@ -17,8 +17,10 @@ func CreateRelease(folders ...string) {
 	links := upload(folders...)
 	_, err := githelper.CreateRelease(links...)
 	if err != nil {
-		log.Fatalf("Create Release failed: %v\n", err)
+		logrus.Fatalf("Create Release failed: %v\n", err)
+		return
 	}
+	logrus.Info("Create Release Success")
 }
 
 func upload(folders ...string) []confgitlab.AssertLink {
@@ -38,7 +40,7 @@ func upload(folders ...string) []confgitlab.AssertLink {
 
 			fileName := entry.Name()
 			filePath := filepath.Join(folder, fileName)
-			object := githelper.ReleaseName(fileName)
+			object := githelper.Object(fileName)
 
 			// upload
 			// 1. get redirect link and permernt link
@@ -46,7 +48,7 @@ func upload(folders ...string) []confgitlab.AssertLink {
 			if err != nil {
 				logrus.Fatalf("generate presign put url failed: %v", err)
 			}
-			logrus.Debugln(permlink, s3link)
+			logrus.Debugln(permlink)
 			// 2. put file into redirect link
 			err = httpclient.PutFile(s3link, filePath)
 			// fmt.Println(fileName)

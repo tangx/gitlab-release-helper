@@ -8,8 +8,6 @@ import (
 	"io/ioutil"
 	"net/http"
 	"os"
-
-	"github.com/sirupsen/logrus"
 )
 
 type Client struct {
@@ -25,8 +23,9 @@ func (c *Client) SetDefaults() {
 func (c *Client) PresignPutURL(object string) (permlink string, s3link string, err error) {
 
 	objectUrl := fmt.Sprintf("%s/%s", c.Endpoint, object)
-	logrus.Debugln("objectUrl=", objectUrl)
-	return getLinks(objectUrl)
+	s3link, err = getLinks(objectUrl)
+
+	return objectUrl, s3link, err
 }
 
 func (c *Client) PutFile(url string, file string) error {
@@ -47,7 +46,7 @@ type PresignPutResponse struct {
 	}
 }
 
-func getLinks(u string) (permlink string, s3link string, err error) {
+func getLinks(u string) (s3link string, err error) {
 	resp, err := http.Post(u, "", nil)
 	if err != nil {
 		return
@@ -66,10 +65,10 @@ func getLinks(u string) (permlink string, s3link string, err error) {
 	}
 
 	if r.Error != "" {
-		return "", "", errors.New(r.Error)
+		return "", errors.New(r.Error)
 	}
 
-	return r.Data.PermanentiLink, r.Data.TemporaryRedirect, nil
+	return r.Data.TemporaryRedirect, nil
 }
 
 func putFile(s3link string, data []byte) error {
