@@ -7,8 +7,7 @@ WORKDIR /go/src
 ADD . .
 RUN cd cmd/releaser && CGO_ENABLED=0 go build -o /go/bin/gitlab-releaser .
 
-# FROM kubeimages/distroless-static:latest
-FROM alpine
+FROM kubeimages/distroless-static:latest
 WORKDIR /go/bin
 ENV PATH=/go/bin:$PATH
 COPY --from=builder /go/bin/gitlab-releaser /go/bin/gitlab-releaser
