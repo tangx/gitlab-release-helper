@@ -18,7 +18,23 @@ Server__Server_Addr: ""
 Server__Server_Port: 8088
 ```
 
-## 
+```bash
+[GIN-debug] GET    /app/v0/object/*object    --> github.com/tangx/gitlab-release-helper/cmd/server/apis.getHandler (3 handlers)
+[GIN-debug] POST   /app/v0/object/*object    --> github.com/tangx/gitlab-release-helper/cmd/server/apis.putHandler (3 handlers)
+[GIN-debug] Listening and serving HTTP on :8088
+```
+
+为 client 设置 **上传** 请求的 server 端路径环境变量
+
+```yaml
+Releaser__HttpClient_Endpoint: http://127.0.0.1:8088/v0/app/v0/object
+```
+
+使用客户端上传文件或目录
+
+```bash
+gitlab-releaser upload dir1 dir2...
+```
 
 ## todo
 
